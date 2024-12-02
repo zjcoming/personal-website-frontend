@@ -5,12 +5,12 @@ import { motion } from "framer-motion"
 import { Github, Twitter, Instagram } from 'lucide-react'
 
 const navItems = [
-  { name: "Favorites", href: "/favorites" },
-  { name: "Influencer", href: "/influencer" },
-  { name: "Code", href: "/code" },
-  { name: "Game", href: "/game" },
-  { name: "Music", href: "/music" },
-  { name: "Books", href: "/books" },
+  { name: "Favorites", href: "" },
+  { name: "Influencer", href: "" },
+  { name: "Code", href: "" },
+  { name: "Game", href: "" },
+  { name: "Music", href: "" },
+  { name: "Books", href: "" },
 ]
 
 const socialLinks = [
