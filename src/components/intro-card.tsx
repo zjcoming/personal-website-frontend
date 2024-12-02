@@ -3,13 +3,9 @@
 import { motion } from "framer-motion"
 
 const roles = [
-  "Influencer (>286K followers)",
-  "Chromium Developer",
-  "Web Developer",
-  "Game Developer",
+  "Android Developer",
   "Game Critic",
-  "Digital Nomad",
-  "Trader",
+  "Wanna Be A Digital Nomad",
 ]
 
 export default function IntroCard() {
@@ -28,11 +24,11 @@ export default function IntroCard() {
             transition={{ delay: 0.2, duration: 0.8 }}
           >
             <p className="text-gray-600 mb-2 font-poppins">My name is:</p>
-            <h1 className="text-4xl font-bold text-orange-400 font-poppins mb-4">SamuelQZQ</h1>
+            <h1 className="text-4xl font-bold text-orange-400 font-poppins mb-4">ZJcoming</h1>
             <div className="w-full h-px bg-gray-200 my-4" />
-            <p className="text-gray-600 mb-2 font-poppins">I&apos;m a:</p>
+            {/* <p className="text-gray-600 mb-2 font-poppins">I&apos;m a:</p> */}
             <ul className="space-y-2">
-              {roles.map((role, index) => (
+              {/* {roles.map((role, index) => (
                 <motion.li
                   key={role}
                   className="text-gray-600 font-poppins"
@@ -42,7 +38,7 @@ export default function IntroCard() {
                 >
                   {role}
                 </motion.li>
-              ))}
+              ))} */}
             </ul>
           </motion.div>
         </div>
