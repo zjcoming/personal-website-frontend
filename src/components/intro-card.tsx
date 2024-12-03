@@ -2,12 +2,6 @@
 
 import { motion } from "framer-motion"
 
-const roles = [
-  "Android Developer",
-  "Game Critic",
-  "Wanna Be A Digital Nomad",
-]
-
 export default function IntroCard() {
   return (
     <motion.div
