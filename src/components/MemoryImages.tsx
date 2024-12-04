@@ -1,39 +1,49 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useCallback, useEffect, useState } from 'react';
 
-const images = [
-  { src: '/assets/p1.jpg', alt: 'Memory 1', width: 150, height: 150 },
-  { src: '/assets/p2.jpg', alt: 'Memory 2', width: 200, height: 150 },
-  { src: '/assets/p3.jpg', alt: 'Memory 3', width: 180, height: 180 },
-  { src: '/assets/p4.jpg', alt: 'Memory 4', width: 160, height: 160 },
-  { src: '/assets/p5.jpg', alt: 'Memory 5', width: 220, height: 140 },
-  { src: '/assets/p6.jpg', alt: 'Memory 6', width: 200, height: 200 },
-  { src: '/assets/p7.jpg', alt: 'Memory 7', width: 190, height: 190 },
-  { src: '/assets/p8.jpg', alt: 'Memory 8', width: 210, height: 160 },
-];
+interface Image {
+  name: string;
+  url: string;
+}
 
 export default function MemoryImages() {
+  const [images, setImages] = useState<Image[]>([]);
+
+  useEffect(() => {
+    console.log("Fetching images...");
+    fetch('http://localhost:3001/api/images')
+      .then(response => response.json())
+      .then(data => {
+        console.log("Images fetched");
+        setImages(data);
+      })
+      .catch(error => console.error('Error fetching images:', error));
+  }, []);  // 确保空依赖数组，确保只执行一次
+  
+
+  const getRandomPosition = useCallback(() => ({
+    left: `${Math.random() * 100}%`,
+    top: `${Math.random() * 100}%`,
+  }), []);
+
   return (
     <div className="fixed inset-0 pointer-events-none z-0">
       {images.map((img, index) => (
         <motion.div
-          key={img.src}
+          key={img.name}
           className="absolute"
-          style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-          }}
+          style={getRandomPosition()}
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: index * 0.2, duration: 0.5 }}
         >
           <img
-            src={img.src}
-            alt={img.alt}
-            width={img.width}
-            height={img.height}
+            src={img.url}
+            alt={`Memory ${index + 1}`}
             className="rounded-md shadow-lg"
+            style={{ maxWidth: '200px', maxHeight: '200px' }}
           />
         </motion.div>
       ))}

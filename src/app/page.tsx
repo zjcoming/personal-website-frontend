@@ -6,10 +6,8 @@ import Tagline from "@/components/tagline"
 import DynamicBackground from "@/components/dynamic-background"
 import MemoryImages from "@/components/MemoryImages"
 import BackgroundMusic from "@/components/BackgroundMusic"
-import { useState } from "react"
 
 export default function Home() {
-  const [isMusicPlaying, setIsMusicPlaying] = useState(false)
   return (
     <div className="min-h-screen bg-white overflow-hidden">
       <DynamicBackground />
@@ -21,13 +19,7 @@ export default function Home() {
           <Tagline />
         </div>
       </main>
-      <BackgroundMusic isPlaying={isMusicPlaying} setIsPlaying={setIsMusicPlaying} />
-      <button 
-        onClick={() => setIsMusicPlaying(!isMusicPlaying)}
-        className="fixed bottom-4 right-4 z-50 bg-orange-400 text-white p-2 rounded-full shadow-lg hover:bg-orange-500 transition-colors duration-200"
-      >
-        {isMusicPlaying ? 'Pause Music' : 'Play Music'}
-      </button>
+      <BackgroundMusic />
     </div>
   )
 }
