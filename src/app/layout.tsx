@@ -10,8 +10,8 @@ const poppins = Poppins({
 })
 
 export const metadata: Metadata = {
-  title: "SamuelQZQ - Personal Website",
-  description: "A personal website showcasing my work and interests",
+  title: "ZJcoming - Personal Website",
+  description: "A personal website",
 }
 
 export default function RootLayout({
