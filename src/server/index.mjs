@@ -23,24 +23,59 @@ const client = new OSS({
 // API 路由：获取图片列表
 app.get('/api/images', async (req, res) => {
   console.log('Received request for images');
+
   try {
-    const result = await client.list(
-      { prefix: 'girlfriend/girlfriend/', 'max-keys': 5 },
-      {}
-    );
-    const images =
-      result.objects?.map((obj) => ({
+    // 请求参数
+    const prefix = 'girlfriend/girlfriend/';
+    const maxKeys = 100; // 加大获取对象的数量上限以增加随机挑选的范围
+
+    // 列出对象
+    const result = await client.list({ prefix, 'max-keys': maxKeys }, {});
+
+    // 检查对象列表
+    if (!result.objects || !Array.isArray(result.objects)) {
+      console.warn('No objects found or objects is not an array.');
+      return res.json([]); // 返回空数组
+    }
+
+    // 过滤图片文件
+    const imageUrls = result.objects
+      .filter((obj) => /\.(jpg|jpeg|png|gif)$/i.test(obj.name)) // 筛选图片文件
+      .map((obj) => ({
         name: obj.name,
         url: client.signatureUrl(obj.name),
-      })) || [];
+      }));
 
-    res.json(images);
-    console.log("/api/images response size: " + images.length);  // 打印图片数
+    // 如果没有可用图片，返回空数组
+    if (imageUrls.length === 0) {
+      console.warn('No valid image files found.');
+      return res.json([]);
+    }
+
+    // 随机挑选3张图片
+    const randomImages = [];
+    const imageCount = Math.min(3, imageUrls.length); // 确保不会超过可用图片数量
+
+    while (randomImages.length < imageCount) {
+      const randomIndex = Math.floor(Math.random() * imageUrls.length);
+      const randomImage = imageUrls[randomIndex];
+
+      // 确保不会重复选择同一图片
+      if (!randomImages.includes(randomImage)) {
+        randomImages.push(randomImage);
+      }
+    }
+
+    // 返回随机挑选的图片
+    res.json(randomImages);
+    console.log(`/api/images response size: ${randomImages.length}`); // 打印返回图片数量
   } catch (error) {
+    // 错误处理
     console.error('Error fetching images:', error);
     res.status(500).json({ error: 'Failed to fetch images' });
   }
 });
+
 
 
 // API 路由：获取音乐文件链接
